@@ -31,4 +31,8 @@ return [
 
     'supports_credentials' => false,
 
+    'paths' => ['api/*', 'sanctum/csrf-cookie', 'login', 'logout', 'register'], // Agrega tus rutas aquí
+'allowed_origins' => ['http://localhost:3000'], // Agrega la URL de tu aplicación frontend aquí
+
+
 ];
