@@ -2,44 +2,68 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    /**
+     * Registra un nuevo usuario.
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function register(Request $request)
     {
+        // Validar los datos del formulario de registro
         $validator = Validator::make($request->all(), [
-            'email' => 'required|string|email|unique:users',
-            'password' => 'required|string|min:8',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:8',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $user = User::create([
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-        ]);
+        // Crear un nuevo usuario
+        $user = new User();
+        $user->email = $request->input('email');
+        $user->password = bcrypt($request->input('password'));
+        $user->save();
 
-        return response()->json(['message' => 'Registro exitoso'], 201);
+        return response()->json(['message' => 'Usuario registrado con éxito'], 201);
     }
 
+    /**
+     * Inicia sesión con las credenciales proporcionadas.
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
-
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-            $token = $user->createToken('AuthToken')->accessToken;
-
-            return response()->json(['token' => $token], 200);
-        } else {
-            return response()->json(['message' => 'Credenciales incorrectas'], 401);
+        // Validar las credenciales y autenticar al usuario
+        
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            // Autenticación exitosa
+            return redirect('http://localhost:3000/pages/profile.php'); // Redirigir al usuario a la página de perfil
         }
+        
+        // Autenticación fallida
+        return response()->json(['message' => 'Credenciales inválidas'], 401);
+    }
+    
+    /**
+     * Cierra la sesión del usuario autenticado.
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout(Request $request)
+    {
+        $request->user()->token()->revoke();
+        return response()->json(['message' => 'Sesión cerrada con éxito']);
     }
 }
-;

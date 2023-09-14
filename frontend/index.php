@@ -23,7 +23,7 @@
             </div>
 
             <!-- Formulario de inicio de sesión -->
-            <form action="#" method="post" class="flex flex-col gap-4 relative text-gray-500">
+            <form action="http://localhost:8000/api/login" method="post" class="flex flex-col gap-4 relative text-gray-500">
                 <!-- Campo para el correo electrónico -->
                 <div class="flex items-center gap-3 border border-gray-BD rounded-lg p-3 ps-4">
                     <div class="w-4"><img src="./svg/email.svg" alt="logo"></div>
@@ -41,8 +41,8 @@
                 <p id="msj" class="text-red-500 w-full text-center absolute transform duration-500 ease-in-out mb-8 bottom-8"></p>
 
                 <!-- Botón para enviar el formulario -->
-                <button onclick="login()" class="w-full p-1.5 mt-2 bg-blue-500 rounded-lg text-sm leading-normal font-semibold text-white"
-                    type="button">Login</button>
+                <button class="w-full p-1.5 mt-2 bg-blue-500 rounded-lg text-sm leading-normal font-semibold text-white"
+    type="submit">Login</button>
             </form>
 
             <!-- Sección de inicio de sesión con redes sociales -->
@@ -82,8 +82,7 @@
 
             if (response.ok) {
                 // Éxito: Redirigir a la página de perfil o realizar alguna acción
-                console.log('Inicio de sesión exitoso');
-                // Puedes redirigir al usuario o realizar otras acciones aquí
+                window.location.href = './pages/profile.php'; // Corrección en la ruta de redirección
             } else {
                 // Error: Mostrar mensaje de error
                 const errorMessage = data.message || 'Error de inicio de sesión';
