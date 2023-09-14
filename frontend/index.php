@@ -82,7 +82,7 @@
 
             if (response.ok) {
                 // Éxito: Redirigir a la página de perfil o realizar alguna acción
-                window.location.href = './pages/profile.php'; // Corrección en la ruta de redirección
+                window.location.href = './pages/dashboard.php'; // Corrección en la ruta de redirección
             } else {
                 // Error: Mostrar mensaje de error
                 const errorMessage = data.message || 'Error de inicio de sesión';

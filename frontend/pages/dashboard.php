@@ -1,50 +1,59 @@
-<?php
-// Iniciar sesión y redirigir a la página de inicio de sesión si no hay una sesión activa
-session_start();
-if (!isset($_SESSION['usuario'])) {
-    header("Location: ../index.php");
-    die();
-}
-?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <!-- Incluir fuentes de Google y archivo de estilos CSS -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;300;400;500;700;900&display=swap">
-    <link href="../css/output.css" rel="stylesheet" />
+    <!-- Agrega los enlaces a los archivos CSS de Tailwind CSS -->
+    <link href="/css/output.css" rel="stylesheet">
     <title>Dashboard</title>
 </head>
 
-<body>
-    <!-- Contenedor principal -->
-    <div class="min-h-screen sx:px-4 flex flex-col items-center font-['Noto_Sans'] bg-gray-50 ">
+<body class="bg-gray-100">
 
-        <?php include "./nav.php" ?>
+    <!-- Menú lateral -->
+    <aside class="bg-blue-900 text-white h-screen w-64 fixed left-0 top-0">
+        <div class="py-4 px-6">
+            <h2 class="text-2xl font-semibold">Dashboard</h2>
+        </div>
+
+        <!-- Enlace para ir al perfil -->
+        <ul class="py-4">
+            <li class="px-6 py-2 hover:bg-blue-800">
+                <a href="./profile.php" class="block">Profile</a>
+            </li>
+        </ul>
+
+        <!-- Botón de cerrar sesión -->
+        <div class="absolute bottom-4 w-full">
+            <a href="../api/logout" class="block text-center text-blue-500 hover:underline">Logout</a>
+        </div>
+    </aside>
+
+    <!-- Contenido principal -->
+    <main class="ml-64 p-6">
+        <!-- Navbar -->
+        <header class="bg-blue-900 py-4 px-6">
+            <!-- Botón de menú hamburguesa para cerrar sesión -->
+            <button id="toggleMenu" class="text-white text-xl">&#9776;</button>
+        </header>
 
         <!-- Contenido del dashboard -->
-        <div class="w-full max-w-3xl sx:border border-gray-BD rounded-xl text-gray-33">
-            <!-- Encabezado -->
-            <div class="px-5 sm:px-12 py-8 relative flex flex-row justify-between items-center">
-                <div>
-                    <h3 class="font-normal text-xl leading-snug text-black">Dashboard</h3>
-                </div>
-            </div>
-
-            <!-- Enlaces de navegación -->
-            <div class="px-5 sm:px-12 py-4">
-                <ul class="text-gray-33 text-lg">
-                    <li class="mb-3">
-                        <a href="./profile_edit.php" class="text-blue-500 hover:underline">Editar Perfil</a>
-                    </li>
-                    <li>
-                        <a href="../php/logout.php" class="text-red-500 hover:underline">Cerrar Sesión</a>
-                    </li>
-                </ul>
-            </div>
+        <div class="bg-white p-6 rounded-lg shadow">
+            <img src="/welcome.jpg">
         </div>
-    </div>
+    </main>
+
+    <!-- JavaScript para alternar el menú lateral -->
+    <script>
+        const toggleMenuButton = document.getElementById('toggleMenu');
+        const aside = document.querySelector('aside');
+        const main = document.querySelector('main');
+
+        toggleMenuButton.addEventListener('click', () => {
+            aside.classList.toggle('hidden');
+            main.classList.toggle('ml-64');
+        });
+    </script>
 </body>
 
 </html>

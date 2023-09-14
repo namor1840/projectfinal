@@ -48,7 +48,7 @@ class AuthController extends Controller
         
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             // Autenticación exitosa
-            return redirect('http://localhost:3000/pages/profile.php'); // Redirigir al usuario a la página de perfil
+            return redirect('http://localhost:3000/pages/dashboard.php'); // Redirigir al usuario a la página de perfil
         }
         
         // Autenticación fallida

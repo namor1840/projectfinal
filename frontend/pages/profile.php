@@ -22,6 +22,12 @@ $client = new HttpClient();
 $response = $client->get($userApiUrl, [], [
     'Authorization: Bearer ' . $token,
 ]);
+try {
+    // Código que puede causar un error HTTP 500
+} catch (Exception $e) {
+    // Manejo de excepciones
+    echo 'Error: ' . $e->getMessage();
+}
 
 // Verificar si la solicitud fue exitosa
 if ($response['status_code'] === 200) {
